@@ -27,22 +27,20 @@ void merge(int array[], int const left, int const mid, int const right){
         subArrayLeft[i] = array[left+i];
         
     }
-    for(int i =0; i<subArrayLeftLength; i++){
+    // for(int i =0; i<subArrayLeftLength; i++){
         
-        std::cout<< subArrayLeft[i]<< " ";
+    //     std::cout<< subArrayLeft[i]<< " ";
         
-    }
+    // }
 
-    std::cout<< "banana ";
+    // std::cout<< "banana ";
 
 
-    for(int j =0; j<subArrayLeftLength; j++){
+    for(int j =0; j<subArrayRightLength; j++){
         
         subArrayRight[j] = array[mid+j+1];
         
     }
-
-
 
     //set iterators for arrays
 
