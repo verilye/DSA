@@ -1,79 +1,125 @@
 #include <iostream>
 
+// Splitting the original array into two smaller arrays
+// transcribe the values of the original array into the smaller ones
+// Iterating along both sub arrays, while loop in case they arent even
+// Does nothing on first recursion
+// Work through both arrays, assigning the smallest values to the left
+// catch edge cases where left array and right array are one index?
+ // clear up memory of the two temp arrays;
 
 void merge(int array[], int const left, int const mid, int const right){
 
-    int const subArrayOne = mid - left +1;
-    int const subArrayTwo = right - mid;
+    //get length of 2 arrays
 
-    int *leftArray = new int[subArrayOne],
-        *rightArray = new int[subArrayTwo];
+    auto const subArrayLeftLength = mid - left +1;
+    auto const subArrayRightLength = right - mid;
 
-    for(int i = 0; i<subArrayOne; i++){
-        leftArray[i] = array[left+i];
+    //init 2 arrays
+
+    auto* subArrayLeft = new int[subArrayLeftLength];
+    auto* subArrayRight = new int[subArrayRightLength];
+
+    //populate the arrays
+
+    for(int i =0; i<subArrayLeftLength; i++){
+        
+        subArrayLeft[i] = array[left+i];
+        
     }
-    for(int j = 0; j<subArrayTwo; j++){
-        rightArray[j] = array[mid+1+j];
+    for(int i =0; i<subArrayLeftLength; i++){
+        
+        std::cout<< subArrayLeft[i]<< " ";
+        
     }
 
-    int indexOfSubArrayOne = 0,
-        indexOfSubArrayTwo = 0,
-        indexOfMergedArray = left;
+    std::cout<< "banana ";
 
 
-    while(indexOfSubArrayOne < subArrayOne
-        && indexOfSubArrayTwo < subArrayTwo)
-    {
-        if(leftArray[indexOfSubArrayOne]
-            <=rightArray[indexOfSubArrayTwo]){
+    for(int j =0; j<subArrayLeftLength; j++){
+        
+        subArrayRight[j] = array[mid+j+1];
+        
+    }
+
+
+
+    //set iterators for arrays
+
+    int leftArray = 0,
+        rightArray = 0,
+        mergedArray = left;
+
+
+    while( leftArray < subArrayLeftLength &&
+            rightArray < subArrayRightLength){
+        
+        if(subArrayLeft[leftArray]<= subArrayRight[rightArray]){
+
+
+            array[mergedArray] = subArrayLeft[leftArray];
+
+            leftArray++;
+           
+
+        }else{
+
+            array[mergedArray] = subArrayRight[rightArray];
+
+            rightArray++;
             
-            array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-            indexOfSubArrayOne++;
 
         }
-        else {
-            array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-            indexOfSubArrayTwo++;
-        }
-        indexOfMergedArray++;
+
+        mergedArray++;
+        
     }
 
-    while(indexOfSubArrayOne<subArrayOne){
+    while(leftArray<subArrayLeftLength){
 
-        array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-        indexOfSubArrayOne++;
-        indexOfMergedArray++;
-
-    }
-
-    while(indexOfSubArrayTwo< subArrayTwo){
-
-        array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-        indexOfSubArrayTwo++;
-        indexOfMergedArray++;
+        array[mergedArray] = subArrayLeft[leftArray];
+        leftArray++;
+        mergedArray++;
 
     }
 
-    delete[] leftArray;
-    delete[] rightArray;
+    while(rightArray< subArrayRightLength){
+
+        array[mergedArray] = subArrayRight[rightArray];
+        rightArray++;
+        mergedArray++;
+
+    }
+    
+    delete [] subArrayLeft;
+    delete [] subArrayRight;
 
 }
 
-// Declare left and right var which will mark the extreme indices of the array
-// Left will be assigned to 0 and right will be assigned to n-1
-// Find mid = (left+right)/2
-// Call mergeSort on (left,mid) and (mid+1,rear)
-// Above will continue till left<right
-// Then we will call merge on the 2 subproblems
+
+// end the recursion by returning when size of array is a single cell
+
+// Mergesort both sides of the array Recursively
+
+// find the mid point for each subarray by getting the end of the array
+// subtract the beginning and divide by 2
+
+// halve the array down into single cells
+// merge the half arrays back together
+
 
 void mergeSort(int array[], int const begin, int const end){
 
-    if(begin>=end)
+    if(begin>=end){
         return;
+    }
 
-    auto mid = begin + (end - begin)/2;
+    //find middle
+
+    int mid = begin + (end - begin)/2;
+
     mergeSort(array, begin, mid);
-    mergeSort(array, mid+1, end);
+    mergeSort(array, mid + 1, end);
     merge(array, begin, mid, end);
 
 
@@ -97,7 +143,7 @@ void printArray(int arr[], int arraySize){
 
 int main(){
 
-    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int arr[] = { 12, 11, 13, 5, 6, 7, 12, 11, 13, 5, 6, 7, 100 };
     int arr_size = sizeof(arr) / sizeof(arr[0]);
  
     mergeSort(arr, 0, arr_size - 1);
