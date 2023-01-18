@@ -23,6 +23,7 @@ void swap(int* a, int* b){
 }
 
 
+
 // is called recursively for each value in the array
 // is is a node
 
@@ -34,15 +35,33 @@ void heapify(int arr[], int N, int i){
 
     int right = 2*i+2;
 
+
+    // 3 steps
+
+    // Step 1
+    // left is the index of the left child
+    // check to make sure its inside the bounds of the array
+    // if the left child is larger than the parent then 
+    // largest is now the index of the child
+
     if(left<N && arr[left]> arr[largest]){
 
         largest = left;
     }
 
+    // Step 2
+    // repeat step 1 but for the right child 
+    // 
+
     if(right<N && arr[right]> arr[largest]){
 
         largest = right;
     }
+
+    // If step 1 or 2 altered the value of largest 
+    // swap the parent and the child then heapify 
+    // largest, which traverse down the binary heap
+    // to the next layer
 
     if(largest!= i){
 
@@ -56,7 +75,7 @@ void heapify(int arr[], int N, int i){
 
 
 
-// 
+
 // N is the length of the array
 // these loops are iterating over each half of the array backwards recursively
 // the order of the second loop is reversed by the swap function
