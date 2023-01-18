@@ -1,8 +1,18 @@
 #include <iostream>
 
 
-// Find the minimum element then place the minimum element at the beginning,
-// repeat 
+// max heaps are good for heapsorts 
+// min heaps are good for priority queues
+
+// Heaps are stored in an array top to bottom left to right
+// a node's left child is the index *2
+// a node's right child is the index *2 +1
+// a node's parent is index/2 rounded down
+// normally the root is left at index 1 rather than 0?
+
+
+
+//swap 2 values
 
 void swap(int* a, int* b){
 
@@ -12,6 +22,9 @@ void swap(int* a, int* b){
     
 }
 
+
+// is called recursively for each value in the array
+// is is a node
 
 void heapify(int arr[], int N, int i){
 
@@ -35,13 +48,18 @@ void heapify(int arr[], int N, int i){
 
         swap(&arr[i], &arr[largest]);
 
-
         heapify(arr,N,largest);
 
     }
 
 }
 
+
+
+// 
+// N is the length of the array
+// these loops are iterating over each half of the array backwards recursively
+// the order of the second loop is reversed by the swap function
 
 void heapSort(int arr[], int N){
 
