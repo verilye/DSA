@@ -39,6 +39,14 @@
 // quickSort(arr, p+1, r)
 // quicSort(arr, l, p+1)
 
+// Heap Sort
+// Prepare a swap and heapify function
+// Heapify checks left and right children of supplied array index
+// left then right
+// if left or right node is larger, swap the largest number to the index of the child
+// call heapify on the largest node
+// a heapsort calls heapify on each index in the array, working backwards
+
 
 
 int isEmpty(int* top){
