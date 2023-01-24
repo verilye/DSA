@@ -24,9 +24,9 @@ int getBucketIndex(int value);
 void BucketSort(int arr[])
 {
     int i, j;
-    struct Node **buckets;
 
-    // Create buckets and allocate memory size
+    //Create an array that fits pointers to Node structs inside
+    struct Node **buckets;
     buckets = (struct Node **)malloc(sizeof(struct Node *) * NBUCKET);
 
     // Initialize empty buckets
@@ -35,41 +35,51 @@ void BucketSort(int arr[])
         buckets[i] = NULL;
     }
 
-    // Fill the buckets with respective elements
+    
+
     for (i = 0; i < NARRAY; ++i)
     {
         struct Node *current;
+        // Divide value in array by the number of buckets to sort
+        // value into its correct bucket 
         int pos = getBucketIndex(arr[i]);
+
+        // Allocate mem for empty node
         current = (struct Node *)malloc(sizeof(struct Node));
+        // Set empty node's data to array value
         current->data = arr[i];
+        // set new node's next to the linked list that is contained
+        // in the bucket
         current->next = buckets[pos];
+        // set new node as the head of the linked list in the bucket
         buckets[pos] = current;
     }
 
-    // Print the buckets along with their elements
-    for (i = 0; i < NBUCKET; i++)
-    {
-        cout << "Bucket[" << i << "] : ";
-        printBuckets(buckets[i]);
-        cout << endl;
-    }
+    // // Print the buckets along with their elements
+    // for (i = 0; i < NBUCKET; i++)
+    // {
+    //     cout << "Bucket[" << i << "] : ";
+    //     printBuckets(buckets[i]);
+    //     cout << endl;
+    // }
 
-    // Sort the elements of each bucket
+    // Do the insertion sort w/Linked List
     for (i = 0; i < NBUCKET; ++i)
     {
         buckets[i] = InsertionSort(buckets[i]);
     }
 
-    cout << "-------------" << endl;
-    cout << "Bucktets after sorted" << endl;
-    for (i = 0; i < NBUCKET; i++)
-    {
-        cout << "Bucket[" << i << "] : ";
-        printBuckets(buckets[i]);
-        cout << endl;
-    }
+    // cout << "-------------" << endl;
+    // cout << "Bucktets after sorted" << endl;
+    // for (i = 0; i < NBUCKET; i++)
+    // {
+    //     cout << "Bucket[" << i << "] : ";
+    //     printBuckets(buckets[i]);
+    //     cout << endl;
+    // }
 
-    // Put sorted elements on arr
+    // Go through each bucket and spit linked lists
+    // out into array
     for (j = 0, i = 0; i < NBUCKET; ++i)
     {
         struct Node *node;
@@ -81,6 +91,7 @@ void BucketSort(int arr[])
         }
     }
 
+    // go through and delete the memory that was taken up by the node structs
     for (i = 0; i < NBUCKET; ++i)
     {
         struct Node *node;
@@ -93,6 +104,8 @@ void BucketSort(int arr[])
             free(tmp);
         }
     }
+
+    //delete the array
     free(buckets);
     return;
 }
@@ -164,6 +177,7 @@ void print(int ar[])
     cout << endl;
 }
 
+
 void printBuckets(struct Node *list)
 {
     struct Node *cur = list;
@@ -179,12 +193,12 @@ int main(void)
 {
     int array[NARRAY] = {42, 32, 33, 52, 37, 47, 51};
 
-    cout << "Initial array: " << endl;
-    print(array);
-    cout << "-------------" << endl;
+    // cout << "Initial array: " << endl;
+    // print(array);
+    // cout << "-------------" << endl;
 
     BucketSort(array);
-    cout << "-------------" << endl;
-    cout << "Sorted array: " << endl;
+    // cout << "-------------" << endl;
+    // cout << "Sorted array: " << endl;
     print(array);
 }
