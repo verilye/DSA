@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 
+// ALSO KNOWN AS A PRIORITY QUEUE
+
 class Heap
 {
 
