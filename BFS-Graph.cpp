@@ -36,6 +36,7 @@ public:
         // Mark all verticies not visited
         vector<bool> visited;
         visited.resize(V,false);
+        
 
         list<int> queue;
 
